@@ -10,6 +10,11 @@ public class SnakeController : MonoBehaviour
     public Transform bodyPartPrefab;
     private List<Transform> bodyParts;
 
+
+    private bool hasShield = false;
+    private float speedMultiplier = 1f;
+    private int scoreMultiplier = 1;
+
     private void Start()
     {
         lastDirection = direction;
@@ -45,10 +50,10 @@ public class SnakeController : MonoBehaviour
         }
 
         this.transform.position = new Vector3
-            (Mathf.Round(this.transform.position.x) + direction.x,
-             Mathf.Round(this.transform.position.y) + direction.y,
-             0.0f
-            );
+            (Mathf.Round(this.transform.position.x) + (direction.x * speedMultiplier),
+             Mathf.Round(this.transform.position.y) + (direction.y * speedMultiplier),
+             0.0f);
+
         lastDirection = direction;
         WrapScreen();
     }
@@ -94,5 +99,43 @@ public class SnakeController : MonoBehaviour
         }
 
     }
+    public void ActivateShield(float duration)
+    {
+        hasShield = true;
+        Debug.Log("Shield Activated!");
+
+        Invoke(nameof(DeactivateShield), duration);
+
+    }
+    private void DeactivateShield()
+    {
+        hasShield = false;
+        Debug.Log("Shield Deactivated!");
+    }
+    public void ActivateSpeedBoost(float duration)
+    {
+        speedMultiplier = 1.5f; // Increase speed by 50%
+        Debug.Log("Speed Boost Activated!");
+
+        Invoke(nameof(DeactivateSpeedBoost), duration);
+    }
+    private void DeactivateSpeedBoost()
+    {
+        speedMultiplier = 1f;
+        Debug.Log("Speed Boost Deactivated!");
+    }
+    public void ActivateScoreBoost(float duration)
+    {
+        scoreMultiplier = 2; // Double the score
+        Debug.Log("Score Boost Activated!");
+
+        Invoke(nameof(DeactivateScoreBoost), duration);
+    }
+    private void DeactivateScoreBoost()
+    {
+        scoreMultiplier = 1;
+        Debug.Log("Score Boost Deactivated!");
+    }
+
 
 }
