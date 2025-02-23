@@ -1,42 +1,23 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Snake : MonoBehaviour
+public class SnakeController : MonoBehaviour
 {
-    public float speed = 5f;
     private Vector2 direction = Vector2.right;
+
     private Vector2 lastDirection;
 
     public Transform bodyPartPrefab;
     private List<Transform> bodyParts;
 
-    private Rigidbody2D rb;
-
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         lastDirection = direction;
         bodyParts = new List<Transform>();
         bodyParts.Add(this.transform);
     }
 
-    private void Update()
-    {
-        HandleInput();
-    }
-
-    private void FixedUpdate()
-    {
-        for (int i = bodyParts.Count - 1; i > 0; i--)
-        {
-            bodyParts[i].position = bodyParts[i - 1].position;
-        }
-
-        MoveSnake();
-        WrapScreen();
-    }
-
-    void HandleInput()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.W) && lastDirection != Vector2.down)
         {
@@ -56,31 +37,33 @@ public class Snake : MonoBehaviour
         }
     }
 
-    void MoveSnake()
+    private void FixedUpdate()
     {
-        Vector3 prevPos = transform.position;
-        rb.velocity = direction * speed;
-
-        for (int i = 0; i < bodyParts.Count; i++)
+        for (int i = bodyParts.Count - 1; i > 0; i--)
         {
-            Vector3 tempPos = bodyParts[i].position;
-            bodyParts[i].position = prevPos;
-            prevPos = tempPos;
+            bodyParts[i].position = bodyParts[i - 1].position;
         }
-        lastDirection = direction;
-    }
 
+        this.transform.position = new Vector3
+            (Mathf.Round(this.transform.position.x) + direction.x,
+             Mathf.Round(this.transform.position.y) + direction.y,
+             0.0f
+            );
+        lastDirection = direction;
+        WrapScreen();
+    }
     void WrapScreen()
     {
         Vector3 newPos = transform.position;
 
-        if (newPos.x > 9) newPos.x = -9;
-        else if (newPos.x < -9) newPos.x = 9;
-        if (newPos.y > 5) newPos.y = -5;
-        else if (newPos.y < -5) newPos.y = 5;
+        if (newPos.x > 36) newPos.x = -36;
+        else if (newPos.x < -36) newPos.x = 36;
+        if (newPos.y > 20) newPos.y = -20;
+        else if (newPos.y < -20) newPos.y = 20;
 
         transform.position = newPos;
     }
+
     private void Grow()
     {
         Transform segment = Instantiate(this.bodyPartPrefab);
@@ -99,7 +82,6 @@ public class Snake : MonoBehaviour
 
         this.transform.position = Vector3.zero;
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Food")
@@ -112,6 +94,5 @@ public class Snake : MonoBehaviour
         }
 
     }
-
 
 }

@@ -2,17 +2,29 @@ using UnityEngine;
 
 public class FoodScript : MonoBehaviour
 {
-    public GameObject foodPrefab;
+    public BoxCollider2D gridArea;
 
-    void Start()
+    private void Start()
     {
-        InvokeRepeating(nameof(SpawnFood), 1f, 5f); // Spawns food every 5 seconds
+        RandomizePosition();
     }
 
-
-    void SpawnFood()
+    void RandomizePosition()
     {
-        Vector2 spawnPosition = new Vector2(Random.Range(-9, 9), Random.Range(-5, 5));
-        Instantiate(foodPrefab, spawnPosition, Quaternion.identity);
+        Bounds bounds = this.gridArea.bounds;
+
+        float x = Random.Range(bounds.min.y, bounds.max.x);
+        float y = Random.Range(bounds.min.y, bounds.max.y);
+
+        this.transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0.0f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Snake")
+        {
+            RandomizePosition();
+        }
+
     }
 }
