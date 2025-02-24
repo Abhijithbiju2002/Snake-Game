@@ -8,7 +8,7 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Snake"))
+        if (collision.CompareTag("Snake") || collision.CompareTag("Snake2"))
         {
             SnakeController snake = collision.GetComponent<SnakeController>();
 

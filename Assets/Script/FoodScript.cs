@@ -21,7 +21,7 @@ public class FoodScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Snake")
+        if (collision.tag == "Snake" || collision.tag == "Snake2")
         {
             RandomizePosition();
         }

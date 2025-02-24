@@ -8,6 +8,8 @@ TagManager:
   - Food
   - BodyPart
   - ParentSnake
+  - Snake 2
+  - Snake2
   layers:
   - Default
   - TransparentFX
