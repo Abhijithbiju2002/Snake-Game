@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI player2ScoreText;
     public TextMeshProUGUI winnerText;
 
+    public AudioSource buttonClick;
+    public AudioSource gameOverSound;
+
     private int player1Score = 0;
     private int player2Score = 0;
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
         startMenu.SetActive(true);
         pauseMenu.SetActive(false);
         GameOverScreen.SetActive(false);
+
     }
 
     private void Update()
@@ -48,11 +52,13 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
+        PlayButtonSound();
         Time.timeScale = 1;// Unpause game
         startMenu.SetActive(false);
     }
     public void TogglePause()
     {
+        PlayButtonSound();
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
         pauseMenu.SetActive(isPaused);
@@ -62,13 +68,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0; // Stop game
         GameOverScreen.SetActive(true);
         winnerText.text = "Winner: " + winner;
+
+        PlayGameOverSound();
     }
     public void RestartGame()
     {
+        PlayButtonSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void QuitGame()
     {
+        PlayButtonSound();
         Application.Quit();
     }
     public void UpdateScore(int player, int Score)
@@ -82,6 +92,20 @@ public class GameManager : MonoBehaviour
         {
             player2Score += Score;
             player2ScoreText.text = "P2 Score: " + player2Score;
+        }
+    }
+    private void PlayButtonSound()
+    {
+        if (buttonClick != null)
+        {
+            buttonClick.Play();
+        }
+    }
+    private void PlayGameOverSound()
+    {
+        if (gameOverSound != null)
+        {
+            gameOverSound.Play();
         }
     }
 }
