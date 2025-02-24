@@ -25,7 +25,7 @@ This is a **2-player Snake Game** built in Unity, featuring:
 - **Score Boost** ⭐: Doubles points for a limited time  
 
 ## 🎥 Demo Video  
-[![Game Demo](https://drive.google.com/file/d/1tRJi59rOqKvnXoxxIcI2djM0Qbc3w-Ia/view?usp=sharing)  
+[![Game Demo] https://drive.google.com/file/d/1tRJi59rOqKvnXoxxIcI2djM0Qbc3w-Ia/view?usp=sharing
 
 1. Clone this repository:  
    ```sh
