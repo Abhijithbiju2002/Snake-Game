@@ -123,14 +123,19 @@ public class SnakeController : MonoBehaviour
         }
         else if (collision.tag == "BodyPart" || collision.tag == "Snake" || collision.tag == "Snake2")
         {
-
-            if (!hasShield)
+            if (hasShield)
             {
-                GameManager.instance.GameOver(player == Player.Player1 ? "Player 2" : "Player 1");
-                ResetState();
-
-
+                Debug.Log("Shield saved the snake! No game over.");
+                return; // Do nothing, as shield prevents death
             }
+
+
+
+            GameManager.instance.GameOver(player == Player.Player1 ? "Player 2" : "Player 1");
+            ResetState();
+
+
+
 
         }
     }

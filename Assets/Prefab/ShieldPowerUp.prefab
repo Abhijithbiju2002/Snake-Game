@@ -145,4 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   powerUpType: 0
-  duration: 5
+  duration: 8
