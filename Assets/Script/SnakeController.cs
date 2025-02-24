@@ -18,6 +18,8 @@ public class SnakeController : MonoBehaviour
     private int scoreMultiplier = 1;
     public GameManager gameManager;
 
+    public AudioSource foodSound;
+
     private void Start()
     {
         bodyParts = new List<Transform>();
@@ -120,6 +122,12 @@ public class SnakeController : MonoBehaviour
         {
             Grow();
             GameManager.instance.UpdateScore(player == Player.Player1 ? 1 : 2, 10 * scoreMultiplier);
+
+            //play food sound
+            if (foodSound != null)
+            {
+                foodSound.Play();
+            }
         }
         else if (collision.tag == "BodyPart" || collision.tag == "Snake" || collision.tag == "Snake2")
         {
